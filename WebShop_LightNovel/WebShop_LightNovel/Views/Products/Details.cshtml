@@ -1,0 +1,168 @@
+﻿@model WebShopNovel.Models.Product
+
+@{
+    ViewData["Title"] = Model.ProductName;
+    Layout = "~/Views/Layout/_ProductLayout.cshtml";
+    string url1 = $"{Model.Cate.CategoryName}";
+}
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Product main img -->
+            <div class="col-md-5 col-md-push-2">
+                <div id="product-main-img">
+                    <div class="product-preview" style="height :458px; width:458px;">
+                        <img src="~/images/products/@Model.ThumbImg" alt="@Model.Title">
+                    </div>
+                </div>
+            </div>
+            <!-- /Product main img -->
+            <!-- Product thumb imgs -->
+            <div class="col-md-2  col-md-pull-5">
+                <div id="product-imgs">
+                    <div class="product-preview" style="height :150px;">
+                        <img src="~/images/products/@Model.ThumbImg" alt="@Model.Title">
+                    </div>
+                </div>
+            </div>
+            <!-- /Product thumb imgs -->
+            <!-- Product details -->
+            <div class="col-md-5">
+                <div class="product-details">
+                    <h2 class="product-name">@Model.ProductName</h2>                    
+                    <div>
+                        <h3 class="product-price">@Model.Price.Value.ToString("#,##0") VNĐ</h3>
+
+                        @if (Model.IsActived && Model.UnitInStock > 0)
+                        {
+
+
+                            <span class="product-available">Còn hàng</span>
+                        }
+                        else
+                        {
+                            <span class="product-available">Hết hàng</span>
+                        }
+                    </div>
+                    <p>@Model.ShortDesc</p>
+                    <div class="add-to-cart">
+                        <div class="qty-label">
+                            Qty
+                            <div class="input-number">
+                                <input id="txtsoluong" name="txtsoluong" type="number" value="1">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
+                        </div>
+                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+                        <input type ="hidden" asp-for="ProductId" />
+                    </div>
+
+                   
+
+                    <ul class="product-links">
+                        <li>Danh mục:</li>
+                        <li><a href="@url1">@Model.Cate.CategoryName</a></li>
+                    </ul>
+
+                   
+
+                </div>
+            </div>
+            <!-- /Product details -->
+            <!-- Product tab -->
+            <div class="col-md-12">
+                <div id="product-tab">
+                    <!-- product tab nav -->
+                    <ul class="tab-nav">
+                        <li class="active"><a data-toggle="tab" href="#tab1">Mô tả sản phẩm</a></li>
+                    </ul>
+                    <!-- /product tab nav -->
+                    <!-- product tab content -->
+                    <div class="tab-content">
+                        <!-- tab1  -->
+                        <div id="tab1" class="tab-pane fade in active">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>@Html.Raw(Model.Descriptions)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /tab1  -->
+                    </div>
+                    <!-- /product tab content  -->
+                </div>
+            </div>
+            <!-- /product tab -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<!-- RelateProduct Section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- End RelateProduct Section -->
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $(".add-to-cart-btn").click(function () {
+                    var productID = $('#ProductId').val();
+                    var qty1 = $('#txtsoluong').val();
+                    $.ajax({
+                        url: '/api/cart/add',
+                        type: "POST",
+                        dataType: "JSON",
+                        data: {
+                            productId: productID,
+                            qty: qty1
+                        },
+                        success: function (response) {
+                            loadHeaderCart();
+                            location.reload();
+                        },
+                        error: function (error) {
+                            alert("Lỗi khi post data: " + error.responseText);
+                        }
+                    });
+                });
+            });
+
+            $(".delete").click(function () {
+                var productID = $(this).attr("data-mahh");
+                $.ajax({
+                    url: "api/cart/remove",
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        productId: productID,
+                    },
+                    success: function (result) {
+                        location.reload();
+                    },
+                    error: function (rs) {
+                        alert("Lỗi khi Xóa !!!");
+                    }
+                });
+            });
+
+            function loadHeaderCart() {
+                $("#miniCart").load("/AjaxContent/HeaderCart")
+                $("#miniCart").load("/AjaxContent/NumberCart")
+            }
+        });
+    </script>
+}

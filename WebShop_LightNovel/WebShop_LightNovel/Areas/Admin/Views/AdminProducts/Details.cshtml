@@ -1,0 +1,116 @@
+﻿@model WebShopNovel.Models.Product
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm #"+Model.ProductId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Content Wrapper START -->
+<div class="main-content">
+    <div class="page-header no-gutters has-tab">
+        <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+            <div class="media align-items-center m-b-15">
+                <div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
+                    <img src="~/images/products/@Model.ThumbImg" alt="@Model.Title">
+                </div>
+                <div class="m-l-15">
+                    <h4 class="m-b-0">@Model.ProductName</h4>
+                    <p class="text-muted m-b-0">ID: @Model.ProductId</p>
+                </div>
+            </div>
+            <div class="m-b-15">
+                <div class="form-group">
+                    <a asp-controller="AdminProducts" asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-primary">
+                        <i class="anticon anticon-edit"></i>
+                        <span>Sửa</span>
+                    </a>
+                </div>
+                <div>
+                    <a asp-action="Index" type="button" class="btn btn-dark">Trở về danh sách</a>
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#product-overview">Sơ lược</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container-fluid">
+        <div class="tab-content m-t-15">
+            <div class="tab-pane fade show active" id="product-overview">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media align-items-center">
+                                    <i class="font-size-40 text-primary anticon anticon-stock"></i>
+                                    <div class="m-l-15">
+                                        <p class="m-b-0 text-muted">Số lượng tồn</p>
+                                        <h3 class="m-b-0 ls-1">@Model.UnitInStock</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Thông tin cơ bản</h4>
+                        <div class="table-responsive">
+                            <table class="product-info-table m-t-20">
+                                <tbody>
+                                    <tr>
+                                        <td>Price:</td>
+                                        <td class="text-dark font-weight-semibold">@Model.Price.Value.ToString("#,##0") VNĐ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Category:</td>
+                                        <td>@Model.Cate.CategoryName</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Brand:</td>
+                                        <td>@Model.Publisher.PublisherName</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tag:</td>
+                                        <td>@Model.Tag</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Discount:</td>
+                                        <td>@Model.Discount%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status:</td>
+                                        @if (Model.IsActived)
+                                        {
+                                            <td>
+                                                <span class="badge badge-pill badge-cyan">Còn hàng</span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <span class="badge badge-pill badge-red">Hết hàng</span>
+                                            </td>
+                                        }
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Mô tả sản phẩm</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>@Html.Raw(Model.Descriptions)</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Content Wrapper END -->

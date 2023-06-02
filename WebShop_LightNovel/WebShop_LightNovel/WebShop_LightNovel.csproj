@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>8d898b07-4d9f-4241-a025-b0122bafab4a</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Enums\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Enums\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Enums\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Layout\error-1.cshtml" />
+    <Content Remove="Views\Layout\Errorr.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
+    <PackageReference Include="log4net" Version="2.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="6.0.2" />
+    <PackageReference Include="MimeKit" Version="3.2.0" />
+    <PackageReference Include="NETCore.MailKit" Version="2.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PagedList.Core.Mvc" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\categories\" />
+    <Folder Include="wwwroot\images\brands\" />
+    <Folder Include="wwwroot\images\User\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Layout\Errorr.cshtml" />
+  </ItemGroup>
+
+</Project>
